@@ -15,3 +15,36 @@ def drawBoard(board):
         print('|%s' % (y+1))
     print(' +--------+'
           print('  12345678'))
+
+
+def getNewBoard():
+    board = []
+    for i in range(WIDTH):
+        board.append([' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '])
+    return board
+
+
+def isValidMove(board, tile, xstart, ystart):
+    if board[xstart][ystart] != ' ' or not isOnBoard(xstart, ystart):
+        return False
+
+    if tile == 'X':
+        otherTile = 'O'
+    else:
+        otherTile = 'X'
+
+    tilesToFlip = []
+    for xdirection, ydirection in [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]:
+        x, y = xstart, ystart
+        x += xdirection
+        y += ydirection
+        while isOnBoard(x, y) and board[x][y] == otherTile:
+            x += xdirection
+            y += ydirection
+            if isOnBoard(x, y) and board[x][y] == tile:
+                while True:
+                    x -= xdirection
+                    y -= ydirection
+                    if x == xstart and y == ystart:
+                        break
+                    tilesToFlip.append([x, y])
