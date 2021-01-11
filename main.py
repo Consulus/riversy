@@ -13,8 +13,8 @@ def drawBoard(board):
         for x in range(WIDTH):
             print(board[x][y], end='')
         print('|%s' % (y+1))
-    print(' +--------+'
-          print('  12345678'))
+        print(' +--------+')
+        print('  12345678')
 
 
 def getNewBoard():
@@ -100,7 +100,7 @@ def enterPlayerTile():
 
 
 def whoGoesFirst():
-    if.random.randint(0, 1) == 0:
+    if random.randint(0, 1) == 0:
         return 'Компьютер'
     else:
         return 'Человек'
@@ -134,10 +134,10 @@ def isOnCorner(x, y):
 
 
 def getPlayerMove(board, playerTile):
-    DIGITS1TO8 = `1 2 3 4 5 6 7 8`.split()
+    DIGITS1TO8 = '1 2 3 4 5 6 7 8'.split()
     while True:
         print('Укажите ход, текст "выход" для завершения игры или "подсказка" для вывода подсказки')
-        move = input.lower()
+        move = input().lower()
         if move == 'выход' or move == 'подсказка':
             return move
 
@@ -236,3 +236,16 @@ while True:
 
     drawBoard(finalBoard)
     scores = getScoreOfBoard(finalBoard)
+    print('X набрал %s очков. О набрал %s очков.' % (scores['X'], scores['O']))
+    if scores[playerTile] > scores[computerTile]:
+        print('Вы победили компьютер, обогнав кго нв %s очков! Поздравляем!' %
+              (scores[playerTile] - scores[computerTile]))
+    elif scores[playerTile] < scores[computerTile]:
+        print('Вы проиграли. Компьютер победил вас, обогнав на %s очков.' %
+              (scores[computerTile] - scores[playerTile]))
+    else:
+        print('Ничья!')
+
+    print('Хотите сышрать еще раз? (да или нет)')
+    if not input().lower().startswith('д'):
+        break
